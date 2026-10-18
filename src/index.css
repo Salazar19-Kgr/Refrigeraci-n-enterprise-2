@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body{margin:0;background:#050b14;color:#e6f1f5;font-family:system-ui,sans-serif;overflow-x:hidden}
+.glass{background:rgba(10,25,40,.55);backdrop-filter:blur(14px);border:1px solid rgba(34,230,214,.25);border-radius:18px}
+.glow{transition:.3s}.glow:hover{box-shadow:0 0 28px rgba(34,230,214,.4)}
+.grid-bg{position:fixed;inset:0;z-index:-2;background-image:linear-gradient(rgba(34,230,214,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(34,230,214,.06) 1px,transparent 1px);background-size:48px 48px}
+.orb{position:fixed;border-radius:50%;filter:blur(90px);opacity:.35;z-index:-1;animation:flota 14s ease-in-out infinite alternate}
+@keyframes flota{to{transform:translate(60px,-80px) scale(1.2)}}
+.copo{position:fixed;top:-30px;color:#9ff;opacity:.5;z-index:-1;animation:cae linear infinite}
+@keyframes cae{to{transform:translateY(110vh) rotate(360deg)}}
+input,select,textarea{width:100%;box-sizing:border-box;background:rgba(5,15,25,.7);border:1px solid rgba(34,230,214,.25);border-radius:12px;padding:12px;color:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#22e6d6}
+option{background:#0a1928}
