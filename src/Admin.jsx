@@ -18,12 +18,12 @@ function Productos() {
       const {error} = await supabase.storage.from("productos").upload(ruta,img);
       if (!error) imagen_url = supabase.storage.from("productos").getPublicUrl(ruta).data.publicUrl;
     }
-    await supabase.from("productos").insert({...f,precio:num(f.precio),imagen_url});
+    await supabase.from("productos").insert({...f,precio:f.precio.trim()||null,imagen_url});
     setF(vacio); setImg(null); e.target.reset(); cargar();
   }
   async function precio(p) {
     const v = prompt("Nuevo precio para "+p.nombre, p.precio ?? ""); if (v===null) return;
-    await supabase.from("productos").update({precio:num(v)}).eq("id",p.id); cargar();
+    await supabase.from("productos").update({precio:v.trim()||null}).eq("id",p.id); cargar();
   }
   async function borrar(p) {
     if (confirm("¿Eliminar "+p.nombre+"?")) { await supabase.from("productos").delete().eq("id",p.id); cargar(); }
@@ -34,12 +34,12 @@ function Productos() {
       <input required placeholder="Nombre" value={f.nombre} onChange={e=>setF({...f,nombre:e.target.value})}/>
       <select value={f.categoria} onChange={e=>setF({...f,categoria:e.target.value})}>{CATS.map(c=><option key={c}>{c}</option>)}</select>
       <input placeholder="Descripción" value={f.descripcion} onChange={e=>setF({...f,descripcion:e.target.value})}/>
-      <input type="number" step="0.01" placeholder="Precio" value={f.precio} onChange={e=>setF({...f,precio:e.target.value})}/>
+      <input type="text" placeholder="Precio (ej: $10 - $60 o Desde $10)" value={f.precio} onChange={e=>setF({...f,precio:e.target.value})}/>
       <input type="file" accept="image/*" onChange={e=>setImg(e.target.files[0])}/>
       <button className="px-6 py-2.5 rounded-xl bg-cian text-black font-semibold">Guardar</button>
     </form>
     {lista.map(p=>(<div key={p.id} className={fila}>
-      <div><b>{p.nombre}</b><div className="text-xs text-slate-400">{p.categoria} · {p.precio!=null?"$"+p.precio:"Sin precio"}</div></div>
+      <div><b>{p.nombre}</b><div className="text-xs text-slate-400">{p.categoria} · {p.precio||"Sin precio"}</div></div>
       <div className="flex gap-2"><button className={mini} onClick={()=>precio(p)}>Precio</button><button className={mini} onClick={()=>borrar(p)}>Eliminar</button></div>
     </div>))}
   </div>);

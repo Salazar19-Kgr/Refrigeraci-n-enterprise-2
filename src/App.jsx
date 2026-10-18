@@ -59,7 +59,7 @@ function Catalogo() {
               <h3 className="text-lg font-semibold">{p.nombre}</h3>
               <p className="text-sm text-slate-400 mt-1">{p.descripcion}</p>
               <div className="flex justify-between items-center mt-4">
-                <b className="text-xl">{p.precio!=null?"$"+p.precio:"Consultar"}</b>
+                <b className="text-xl">{p.precio||"Consultar"}</b>
                 <button onClick={()=>preguntar(p)} className="text-cian text-sm">Preguntar →</button>
               </div>
             </div>
