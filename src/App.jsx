@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Snowflake, Lock } from "lucide-react";
 import { supabase } from "./supabase";
+import Admin from "./Admin";
 
 const WA = "584245095002";
 const EQUIPOS = ["Aire acondicionado split","Aire de ventana","Aire central","Nevera / Refrigerador","Lavadora","Secadora","Congelador","Otro"];
@@ -151,13 +152,7 @@ export default function App() {
   const [login,setLogin] = useState(false);
   const [admin,setAdmin] = useState(false);
   useEffect(()=>{ supabase.auth.getSession().then(({data})=>setAdmin(!!data.session)); },[]);
-  if (admin) return (
-    <div className="p-8"><Fondo/>
-      <h1 className="text-3xl font-bold text-cian">Panel de administración</h1>
-      <p className="mt-3 text-slate-300">Sesión iniciada. Aquí irán productos, precios, clientes y trabajos.</p>
-      <button className="mt-6 px-5 py-2 rounded-full border border-cian/50" onClick={async()=>{await supabase.auth.signOut();setAdmin(false);}}>Salir</button>
-    </div>
-  );
+  if (admin) return <Admin salir={async()=>{await supabase.auth.signOut();setAdmin(false);}}/>;
   return (
     <>
       <Fondo/><Hero/><Catalogo/><Solicitud/><Resenas/>
