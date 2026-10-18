@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Snowflake, Lock } from "lucide-react";
 import { supabase } from "./supabase";
+import Footer from "./Legal";
 import Login from "./Login";
 import SolicitudNueva, { preguntar } from "./Solicitud";
 import Admin from "./Admin";
@@ -138,10 +139,7 @@ export default function App() {
   return (
     <>
       <Fondo/><Hero/><Catalogo/><SolicitudNueva/><Resenas/>
-      <footer className="text-center py-10 text-sm text-slate-500">
-        © Refrigeración Enterprise ·{" "}
-        <button onClick={()=>setLogin(true)} className="inline-flex items-center gap-1 text-cian"><Lock size={14}/> Administración</button>
-      </footer>
+      <Footer abrirAdmin={()=>setLogin(true)}/>
       {login && <Login cerrar={()=>setLogin(false)} entrar={()=>{setLogin(false);setAdmin(true);}}/>}
     </>
   );

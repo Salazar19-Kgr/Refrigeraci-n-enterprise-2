@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabase";
+import Reportes from "./Reportes";
 
 const CATS = ["Aires split","Aires de ventana","Neveras","Lavadoras","Secadoras","Otros"];
 const fila = "glass p-4 flex justify-between items-center gap-3 flex-wrap";
@@ -97,7 +98,7 @@ function ResenasAdmin() {
 
 export default function Admin({salir}) {
   const [tab,setTab] = useState("Productos");
-  const V = {Productos:<Productos/>,Solicitudes:<Solicitudes/>,Trabajos:<Trabajos/>,Reseñas:<ResenasAdmin/>};
+  const V = {Productos:<Productos/>,Solicitudes:<Solicitudes/>,Trabajos:<Trabajos/>,Reseñas:<ResenasAdmin/>,Reportes:<Reportes/>};
   return (<div className="p-5 max-w-4xl mx-auto">
     <div className="flex justify-between items-center"><h1 className="text-2xl font-bold text-cian">Administración</h1><button onClick={salir} className={mini}>Salir</button></div>
     <div className="flex gap-2 mt-5 flex-wrap">{Object.keys(V).map(t=><button key={t} onClick={()=>setTab(t)} className={"px-4 py-1.5 rounded-full border text-sm "+(tab===t?"bg-cian text-black border-cian":"border-cian/30")}>{t}</button>)}</div>
