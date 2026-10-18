@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Snowflake, Lock } from "lucide-react";
 import { supabase } from "./supabase";
+import Login from "./Login";
 import SolicitudNueva, { preguntar } from "./Solicitud";
 import Admin from "./Admin";
 
@@ -126,26 +127,6 @@ function Resenas() {
         </form>
       )}
     </section>
-  );
-}
-
-function Login({cerrar,entrar}) {
-  const [id,setId] = useState(""); const [pw,setPw] = useState(""); const [err,setErr] = useState("");
-  async function ir(e) {
-    e.preventDefault();
-    const {error} = await supabase.auth.signInWithPassword({email:`${id.trim()}@refrigeracion.app`,password:pw});
-    error ? setErr("ID o contraseña incorrectos ("+error.message+")") : entrar();
-  }
-  return (
-    <div className="fixed inset-0 bg-black/70 grid place-items-center p-6 z-50" onClick={cerrar}>
-      <form onClick={e=>e.stopPropagation()} onSubmit={ir} className="glass p-6 w-full max-w-sm space-y-3">
-        <h3 className="text-xl font-bold">Administración</h3>
-        <input required placeholder="ID" value={id} onChange={e=>setId(e.target.value)}/>
-        <input required type="password" placeholder="Contraseña" value={pw} onChange={e=>setPw(e.target.value)}/>
-        {err && <p className="text-red-400 text-sm">{err}</p>}
-        <button className="w-full py-3 rounded-xl bg-cian text-black font-semibold">Entrar</button>
-      </form>
-    </div>
   );
 }
 
