@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Snowflake, Lock } from "lucide-react";
 import { supabase } from "./supabase";
+import SolicitudNueva, { preguntar } from "./Solicitud";
 import Admin from "./Admin";
 
 const WA = "584245095002";
@@ -58,7 +59,7 @@ function Catalogo() {
               <p className="text-sm text-slate-400 mt-1">{p.descripcion}</p>
               <div className="flex justify-between items-center mt-4">
                 <b className="text-xl">{p.precio!=null?"$"+p.precio:"Consultar"}</b>
-                <a href={`https://wa.me/${WA}?text=${encodeURIComponent("Hola, me interesa: "+p.nombre)}`} target="_blank" rel="noreferrer" className="text-cian text-sm">Preguntar →</a>
+                <button onClick={()=>preguntar(p)} className="text-cian text-sm">Preguntar →</button>
               </div>
             </div>
           </motion.div>
@@ -133,7 +134,7 @@ function Login({cerrar,entrar}) {
   async function ir(e) {
     e.preventDefault();
     const {error} = await supabase.auth.signInWithPassword({email:`${id.trim()}@refrigeracion.app`,password:pw});
-    error ? setErr("ID o contraseña incorrectos") : entrar();
+    error ? setErr("ID o contraseña incorrectos ("+error.message+")") : entrar();
   }
   return (
     <div className="fixed inset-0 bg-black/70 grid place-items-center p-6 z-50" onClick={cerrar}>
@@ -155,7 +156,7 @@ export default function App() {
   if (admin) return <Admin salir={async()=>{await supabase.auth.signOut();setAdmin(false);}}/>;
   return (
     <>
-      <Fondo/><Hero/><Catalogo/><Solicitud/><Resenas/>
+      <Fondo/><Hero/><Catalogo/><SolicitudNueva/><Resenas/>
       <footer className="text-center py-10 text-sm text-slate-500">
         © Refrigeración Enterprise ·{" "}
         <button onClick={()=>setLogin(true)} className="inline-flex items-center gap-1 text-cian"><Lock size={14}/> Administración</button>
